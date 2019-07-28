@@ -1,0 +1,17 @@
+{
+  "name": "server-curso-js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "faker": "^4.1.0",
+    "morgan": "~1.9.1",
+    "sequelize": "^5.10.3",
+    "sqlite3": "^4.0.9"
+  }
+}
