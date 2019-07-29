@@ -3,7 +3,7 @@ module.exports = function (sequelize, DataTypes) {
     cor: DataTypes.INTEGER,
     nome: DataTypes.STRING,
     sigla: DataTypes.STRING,
-    freq: DataTypes.BOOLEAN,
+    freq: DataTypes.INTEGER,
     medaprov: DataTypes.FLOAT
   });
 

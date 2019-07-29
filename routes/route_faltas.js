@@ -1,16 +1,9 @@
 const route = require("express").Router();
 const faltas = require("../models").faltas;
+const FaltasDTO = require("../dto/faltas_dto");
 
 route.post("/", (req, res) => {
-  var falta = {
-    "idmateria": req.body.idmateria,
-    "data": req.body.data,
-    "ordemAula": req.body.ordemAula
-  };
-
-  faltas.create(falta).then(
-    f => res.send(f)
-  );
+  faltas.create(new FaltasDTO(req.body)).then(f => res.send(f));
 });
 
 route.delete("/:id", (req, res) => {

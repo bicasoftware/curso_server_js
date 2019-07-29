@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataType) {
   var horarios = sequelize.define('horarios', {
     idperiodo: DataType.INTEGER,
     ordemaula: DataType.INTEGER,
-    inicio: DataType.DATE,
-    termino: DataType.DATE
+    inicio: DataType.STRING,
+    termino: DataType.STRING
   });
 
   horarios.associate = (models) => {

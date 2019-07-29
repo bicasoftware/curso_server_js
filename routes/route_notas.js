@@ -1,17 +1,11 @@
 const express = require("express");
 const route = express.Router();
+const NotaDTO = require("../dto/nota_dto");
 const models = require("../models");
 
 route.post('/', (req, res) => {
-  var nota = {
-    "idmateria": req.body.idmateria,
-    "data": req.body.data,
-    "nota": req.body.nota
-  };
-
-  models.notas.create(nota).then(
-    n => res.send(n)
-  );
+  let nota = new NotaDTO(req.body);
+  models.notas.create(nota).then(n => res.send(n));
 });
 
 route.delete("/", (req, res) => {
