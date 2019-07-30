@@ -1,6 +1,7 @@
 const route = require("express").Router();
 const model = require("../models").materias;
 const MateriasDTO = require("../dto/materias_dto");
+const msgs = require("../messages");
 
 route.get("/:idperiodo", async (req, res) => {
   try {
@@ -9,9 +10,9 @@ route.get("/:idperiodo", async (req, res) => {
         idperiodo: req.params.idperiodo
       }
     });
-    res.send(200, materias);
+    res.status(200).send(materias);
   } catch (error) {
-    res.send(500, `Nenhum periodo encontrado com a id ${req.params.idperiodo}: ${error}`);
+    res.status(400).send(`Nenhum periodo encontrado com a id ${req.params.idperiodo}: ${error}`);
   }
 });
 
@@ -22,18 +23,18 @@ route.delete("/:id", async (req, res) => {
         id: req.params.id
       }
     });
-    res.send(200);
+    res.status(200).send(msgs.removed);
   } catch (error) {
-    res.send(500, `Erro ao remover materia ${error}`);
+    res.status(400).send(`Erro ao remover materia ${error}`);
   }
 });
 
 route.post("/", async (req, res) => {
   try {
-    let materia = await model.create(new MateriasDTO(req.body));
-    res.send(200, materia);
+    let materia = await model.create(MateriasDTO(req.body));
+    res.status(200).send(materia);
   } catch (error) {
-    res.send(500, `Erro ao incluir materia ${error}`);
+    res.send(400, `Erro ao incluir materia ${error}`);
   }
 });
 

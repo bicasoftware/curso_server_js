@@ -1,33 +1,38 @@
 const route = require("express").Router();
-const faltas = require("../models").faltas;
+const model = require("../models").faltas;
 const FaltasDTO = require("../dto/faltas_dto");
+const msgs = require("../messages");
 
-route.post("/", (req, res) => {
-  faltas.create(new FaltasDTO(req.body)).then(f => res.send(f));
+route.post("/", async (req, res) => {
+  const falta = await model.create(FaltasDTO(req.body));
+  res.status(200).send(falta);
 });
 
-route.delete("/:id", (req, res) => {
-  if (!Boolean(req.params.id)) {
-    res.send(500, "Missing [id]");
-  } else {
-    faltas.destroy({
+route.delete("/:id", async (req, res) => {
+  try {
+    await model.destroy({
       where: {
         "id": req.params.id
       }
-    }).then(_ => res.send(200));
+    });
+
+    res.status(200).send(msgs.removed);
+  } catch (error) {
+    res.status(400).send(`Erro ao remover ${error}`);
   }
 });
 
-route.get("/:idmateria", (req, res) => {
+route.get("/:idmateria", async (req, res) => {
 
   if (!Boolean(req.params.idmateria)) {
-    res.send(500, "Missing [idmateria]");
+    res.status(400).send("Missing [idmateria]");
   } else {
-    faltas.findAll({
+    const faltas = await model.findAll({
       where: {
         idmateria: req.params.idmateria
       }
-    }).then(f => res.send(200, f));
+    });
+    res.status(200).send(faltas);
   }
 });
 

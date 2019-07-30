@@ -2,6 +2,7 @@ const express = require("express");
 const route = express.Router();
 const NotaDTO = require("../dto/nota_dto");
 const models = require("../models");
+const msgs = require("../messages");
 
 route.post('/', (req, res) => {
   let nota = new NotaDTO(req.body);
@@ -20,7 +21,7 @@ route.delete("/", (req, res) => {
       where: {
         "id": id
       }
-    }).then(s => res.send(200));
+    }).then(s => res.status(200).send(msgs.removed));
   }
 });
 
