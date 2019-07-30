@@ -10,6 +10,7 @@ var routeFaltas = require("./routes/route_faltas");
 var routeHorarios = require("./routes/route_horarios");
 var routeMaterias = require("./routes/route_materias");
 var routePeriodos = require("./routes/route_periodos");
+var routeAulas = require("./routes/route_aulas");
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,5 +22,6 @@ app.use('/faltas', routeFaltas);
 app.use('/horarios', routeHorarios);
 app.use('/materias', routeMaterias);
 app.use('/periodos', routePeriodos);
+app.use('/aulas', routeAulas);
 
 module.exports = app;
