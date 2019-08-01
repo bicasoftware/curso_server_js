@@ -89,3 +89,4 @@ typings/
 
 # KDE .directory
 *.directory
+config/authconfig.json

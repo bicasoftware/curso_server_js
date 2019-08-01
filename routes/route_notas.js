@@ -3,6 +3,8 @@ const route = express.Router();
 const NotaDTO = require("../dto/nota_dto");
 const models = require("../models");
 const msgs = require("../messages");
+const authMid = require("../middleware/auth");
+route.use(authMid);
 
 route.post('/', (req, res) => {
   let nota = new NotaDTO(req.body);

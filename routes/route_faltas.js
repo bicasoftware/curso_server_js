@@ -1,7 +1,10 @@
 const route = require("express").Router();
+const authMiddleware = require("../middleware/auth");
 const model = require("../models").faltas;
 const FaltasDTO = require("../dto/faltas_dto");
 const msgs = require("../messages");
+
+route.use(authMiddleware);
 
 route.post("/", async (req, res) => {
   const falta = await model.create(FaltasDTO(req.body));

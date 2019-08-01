@@ -2,6 +2,8 @@ const route = require("express").Router();
 const model = require("../models").horarios;
 const HorariosDTO = require("../dto/horarios_dto");
 const msgs = require("../messages");
+const authMid = require("../middleware/auth");
+route.use(authMid);
 
 route.post("/", async (req, res) => {
   try {

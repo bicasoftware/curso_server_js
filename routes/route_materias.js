@@ -2,6 +2,8 @@ const route = require("express").Router();
 const model = require("../models").materias;
 const MateriasDTO = require("../dto/materias_dto");
 const msgs = require("../messages");
+const authMid = require("../middleware/auth");
+route.use(authMid);
 
 route.get("/:idperiodo", async (req, res) => {
   try {

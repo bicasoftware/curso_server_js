@@ -2,6 +2,8 @@ const route = require("express").Router();
 const model = require("../models").aulas;
 const AulasDTO = require("../dto/aulas_dto");
 const msgs = require("../messages");
+const authMid = require("../middleware/auth");
+route.use(authMid);
 
 route.get('/:idmateria', async (req, res) => {
   const aulas = await model.findAll({
