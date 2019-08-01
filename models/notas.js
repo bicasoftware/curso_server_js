@@ -1,7 +1,21 @@
 module.exports = function (sequelize, DataTypes) {
   var notas = sequelize.define("notas", {
-    data: DataTypes.DATE,
-    nota: DataTypes.FLOAT
+    data: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+      }
+    },
+    nota: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      validate: {
+        max: 10.0,
+        min: 0.0,
+        inNumeric: true
+      }
+    },
   });
 
   notas.associate = (models) => {

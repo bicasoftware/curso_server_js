@@ -9,11 +9,7 @@ route.post('/signin', async (req, res) => {
     email,
     password
   } = req.body
-  res.send({
-    email: email,
-    password: password,
-    body: req.body
-  })
+ 
   if (await emailExists(email)) {
     res.status(500).send({
       error: 'Email já cadastrado'
