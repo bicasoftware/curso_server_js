@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "mocha ./tests/function_tests"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
