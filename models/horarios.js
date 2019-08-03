@@ -2,17 +2,11 @@ module.exports = function (sequelize, DataType) {
   var horarios = sequelize.define('horarios', {
     inicio: {
       type: DataType.STRING,
-      allowNull: false,
-      validate: {
-        isDate: true
-      }
+      allowNull: false
     },
     termino: {
       type: DataType.STRING,
-      allowNull: false,
-      validate: {
-        isDate: true
-      }
+      allowNull: false
     },
     ordemaula: {
       type: DataType.INTEGER,
@@ -23,18 +17,18 @@ module.exports = function (sequelize, DataType) {
         len: [0, 12]
       }
     }
-  });
+  })
 
   horarios.associate = (models) => {
     horarios.belongsTo(
       models.periodos, {
         through: 'idperiodo',
-        as: "id_periodo",
-        foreignKey: "idperiodo",
-        onDelete: "CASCADE"
+        as: 'id_periodo',
+        foreignKey: 'idperiodo',
+        onDelete: 'CASCADE'
       }
     )
   }
 
-  return horarios;
+  return horarios
 }

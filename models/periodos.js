@@ -47,7 +47,7 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         max: 10.0,
         min: 0.0,
-        inNumeric: true
+        isNumeric: true
       }
     }
   });

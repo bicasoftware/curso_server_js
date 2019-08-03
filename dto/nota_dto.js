@@ -1,7 +1,7 @@
-module.exports = function NotaDTO(body) {
+module.exports = function NotaDTO (body) {
   return {
-    idmateria,
-    data,
-    nota,
-  } = body;
+    idmateria: body.idmateria,
+    data: body.data,
+    nota: body.nota
+  }
 }

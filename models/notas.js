@@ -1,10 +1,10 @@
 module.exports = function (sequelize, DataTypes) {
-  var notas = sequelize.define("notas", {
+  var notas = sequelize.define('notas', {
     data: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isDate: true,
+        isDate: true
       }
     },
     nota: {
@@ -15,18 +15,18 @@ module.exports = function (sequelize, DataTypes) {
         min: 0.0,
         inNumeric: true
       }
-    },
-  });
+    }
+  })
 
   notas.associate = (models) => {
     notas.belongsTo(
       models.materias, {
         through: 'idmateria',
-        as: "id_materia",
-        foreignKey: "idmateria"
+        as: 'id_materia',
+        foreignKey: 'idmateria'
       }
-    );
+    )
   }
 
-  return notas;
+  return notas
 }

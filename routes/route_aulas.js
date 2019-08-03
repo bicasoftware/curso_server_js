@@ -1,41 +1,47 @@
-const route = require("express").Router();
-const model = require("../models").aulas;
-const AulasDTO = require("../dto/aulas_dto");
-const msgs = require("../messages");
-const authMid = require("../middleware/auth");
-route.use(authMid);
+const route = require('express').Router()
+const model = require('../models').aulas
+const AulasDTO = require('../dto/aulas_dto')
+const helper = require('../utils/route_helper')
+const authMid = require('../middleware/auth')
+route.use(authMid)
 
 route.get('/:idmateria', async (req, res) => {
-  const aulas = await model.findAll({
+  helper.findAllAndRespond(res, model, {
     where: {
       idmateria: req.params.idmateria
     }
-  });
-
-  res.status(200).send(aulas);
-});
+  })
+})
 
 route.post('/', async (req, res) => {
-  try {
-    const aula = await model.create(AulasDTO(req.body));
-    res.status(200).send(aula);
-  } catch (error) {
-    res.status(400).send(`Erro ao incluir: ${error}`);
-  }
-});
+  helper.createAndRespond(res, model, AulasDTO(req.body))
+})
 
 route.delete('/:id', async (req, res) => {
-  try {
-    await model.destroy({
-      where: {
-        id: req.params.id
-      }
-    });
+  helper.deleteAndRespond(res, model, {
+    where: {
+      id: req.params.id
+    }
+  })
+})
 
-    res.status(200).send(msgs.removed);
-  } catch (error) {
-    res.status(400).send(`Erro ao remover: ${error}`);
-  }
-});
+route.put('/', async (req, res) => {
+  const {
+    id,
+    weekday,
+    ordem,
+    idmateria
+  } = req.body
 
-module.exports = route;
+  helper.putAndRespond(res, model, id, {
+    weekday: weekday,
+    ordem: ordem,
+    idmateria: idmateria
+  }, {
+    where: {
+      id: id
+    }
+  })
+})
+
+module.exports = route

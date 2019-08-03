@@ -1,8 +1,8 @@
-module.exports = function HorariosDTO(body) {
+module.exports = function HorariosDTO (body) {
   return {
-    idperiodo,
-    ordemaula,
-    inicio,
-    termino,
-  } = body;
+    idperiodo: body.idperiodo,
+    ordemaula: body.ordemaula,
+    inicio: body.inicio,
+    termino: body.termino
+  }
 }

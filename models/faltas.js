@@ -4,30 +4,30 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isDate: true,
+        isDate: true
       }
     },
     ordemAula: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate:{
+      validate: {
         isNumeric: true,
         isInt: true,
         len: [0, 12]
       }
     }
-  });
+  })
 
   faltas.associate = (models) => {
     faltas.belongsTo(
       models.materias, {
         through: 'idmateria',
-        as: "id_materia",
-        foreignKey: "idmateria",
-        onDelete: "CASCADE"
+        as: 'id_materia',
+        foreignKey: 'idmateria',
+        onDelete: 'CASCADE'
       }
     )
   }
 
-  return faltas;
+  return faltas
 }

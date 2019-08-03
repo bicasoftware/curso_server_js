@@ -11,16 +11,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlphaNumeric: true,
-        noEmpty: true
+        notEmpty: true
       }
     },
     sigla: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlphaNumeric: true,
-        noEmpty: true,
+        notEmpty: true,
         len: [1, 12]
       }
     },
@@ -39,25 +37,25 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         max: 10.0,
         min: 0.0,
-        inNumeric: true
+        isNumeric: true
       }
-    },
-  });
+    }
+  })
 
   materias.associate = (models) => {
     materias.belongsTo(
       models.periodos, {
         through: 'idperiodo',
-        as: "id_periodo",
-        foreignKey: "idperiodo",
-        onDelete: "CASCADE"
+        as: 'id_periodo',
+        foreignKey: 'idperiodo',
+        onDelete: 'CASCADE'
       }
-    );
+    )
 
-    materias.hasMany(models.faltas);
-    materias.hasMany(models.aulas);
-    materias.hasMany(models.notas);
+    materias.hasMany(models.faltas)
+    materias.hasMany(models.aulas)
+    materias.hasMany(models.notas)
   }
 
-  return materias;
+  return materias
 }

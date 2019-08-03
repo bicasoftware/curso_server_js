@@ -1,7 +1,7 @@
-module.exports = function AulasDTO(body) {
+module.exports = function AulasDTO (body) {
   return {
-    idmateria,
-    weekday,
-    ordem
-  } = body;
+    idmateria: body.idmateria,
+    weekday: body.weekday,
+    ordem: body.ordem
+  }
 }

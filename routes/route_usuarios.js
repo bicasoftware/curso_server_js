@@ -9,7 +9,7 @@ route.post('/signin', async (req, res) => {
     email,
     password
   } = req.body
- 
+
   if (await emailExists(email)) {
     res.status(500).send({
       error: 'Email já cadastrado'
@@ -66,7 +66,7 @@ route.post('/login', async (req, res) => {
   }
 })
 
-async function emailExists(email) {
+async function emailExists (email) {
   const count = await model.count({
     where: {
       email: email
@@ -76,11 +76,11 @@ async function emailExists(email) {
   return count > 0
 }
 
-async function genHash(pwd) {
+async function genHash (pwd) {
   return bcrypt.hash(pwd, 10)
 }
 
-async function genToken(params) {
+async function genToken (params) {
   return jwt.sign(params, authConfig.secret, {
     expiresIn: (24 * 60 * 60)
   })
