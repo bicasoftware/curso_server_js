@@ -1,31 +1,19 @@
-const assert = require("assert");
+/* eslint-disable no-undef */
+const assert = require('assert')
+const hashGenerator = require('../utils/hash_generator')
 
 describe('testando', () => {
-  it("test2", function () {
-    assert.equal(1, 1);
-  });
-
-  it("object copying", function () {
-    const nomes = {
-      nome: "saulo",
-      midname: "henrique",
-      lastname: "andrioli",
-      numbers: [1, 2, 3, 4, 5, 6]
-    }
-
-    const spreadNames = {
-      ...nomes
-    }
-    assert.deepEqual(nomes, spreadNames)
-  });
-
-  it("datas", function(){
-    const date1 = new Date()
-    console.log(typeof date1)
-    console.log(date1.getDate())
-    console.log(date1.getMonth())
-    console.log(date1.getFullYear())
-    console.log(date1.getHours())
-    console.log(date1.getMinutes())
+  it('test2', function () {
+    assert.strictEqual(1, 1)
   })
-});
+
+  it('genhash', async () => {
+    const hash = await hashGenerator.genHash('maluco')
+    console.log(hash)
+  })
+
+  it('genBcrypthash', async () => {
+    const hash = await hashGenerator.genBCryptHash('maluco')
+    console.log(hash)
+  })
+})
