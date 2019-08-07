@@ -50,12 +50,12 @@ module.exports = function (sequelize, DataTypes) {
         isNumeric: true
       }
     }
-  });
+  })
 
   periodos.associate = (models) => {
-    periodos.hasMany(models.materias);
-    periodos.hasMany(models.horarios);
+    periodos.hasMany(models.materias)
+    periodos.hasMany(models.horarios)
   }
 
-  return periodos;
+  return periodos
 }

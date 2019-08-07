@@ -27,7 +27,8 @@ module.exports = function (sequelize, DataTypes) {
       models.materias, {
         through: 'idmateria',
         as: 'id_materia',
-        foreignKey: 'idmateria'
+        foreignKey: 'idmateria',
+        hierarchy: true
       }
     )
   }

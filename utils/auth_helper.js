@@ -12,7 +12,7 @@ module.exports = {
   },
   genToken: async function genToken (params) {
     return jwt.sign(params, authConfig.secret, {
-      expiresIn: (24 * 60 * 60)
+      expiresIn: (3 * 24 * 60 * 60)
     })
   }
 }

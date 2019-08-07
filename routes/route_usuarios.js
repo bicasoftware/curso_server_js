@@ -8,24 +8,34 @@ route.post('/signin', async (req, res) => {
     password
   } = req.body
 
-  if (await emailExists(email)) {
-    res.status(500).send({
-      error: 'Email já cadastrado'
-    })
-  } else {
-    const hash = await auth.genHash(password)
-
-    const user = await model.create({
-      email: email,
-      password: hash
+  try {
+    const count = await model.count({
+      where: {
+        email: email
+      }
     })
 
-    res.status(200).send({
-      email: email,
-      token: await auth.genToken({
-        id: user.id
+    if (count > 0) {
+      res.status(500).send({
+        error: 'Email já cadastrado'
       })
-    })
+    } else {
+      const hash = await auth.genHash(password)
+
+      const user = await model.create({
+        email: email,
+        password: hash
+      })
+
+      res.status(200).send({
+        email: email,
+        token: await auth.genToken({
+          id: user.id
+        })
+      })
+    }
+  } catch (error) {
+
   }
 })
 
@@ -61,15 +71,5 @@ route.post('/login', async (req, res) => {
     res.status(401).send({ error: error.message })
   }
 })
-
-async function emailExists (email) {
-  const count = await model.count({
-    where: {
-      email: email
-    }
-  })
-
-  return count > 0
-}
 
 module.exports = route

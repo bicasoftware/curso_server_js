@@ -46,9 +46,9 @@ module.exports = function (sequelize, DataTypes) {
     materias.belongsTo(
       models.periodos, {
         through: 'idperiodo',
-        as: 'id_periodo',
         foreignKey: 'idperiodo',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        hierarchy: true
       }
     )
 

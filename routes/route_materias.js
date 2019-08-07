@@ -5,24 +5,24 @@ const routeHelper = require('../utils/route_helper')
 const authMid = require('../middleware/auth')
 route.use(authMid)
 
-route.get('/:idperiodo', async (req, res) => {
-  await routeHelper.findAllAndRespond(res, model, {
+route.get('/:idperiodo', async (req, res, next) => {
+  await routeHelper.findAllAndRespond(res, next, model, {
     where: {
       idperiodo: req.params.idperiodo
     }
   })
 })
 
-route.delete('/:id', async (req, res) => {
-  await routeHelper.deleteAndRespond(res, model, {
+route.delete('/:id', async (req, res, next) => {
+  await routeHelper.deleteAndRespond(res, next, model, {
     where: {
       id: req.params.id
     }
   })
 })
 
-route.post('/', async (req, res) => {
-  await routeHelper.createAndRespond(res, model, MateriasDTO(req.body))
+route.post('/', async (req, res, next) => {
+  await routeHelper.createAndRespond(res, next, model, MateriasDTO(req.body))
 })
 
 module.exports = route

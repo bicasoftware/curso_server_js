@@ -25,7 +25,8 @@ module.exports = function (sequelize, DataType) {
         through: 'idperiodo',
         as: 'id_periodo',
         foreignKey: 'idperiodo',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        hierarchy: true
       }
     )
   }

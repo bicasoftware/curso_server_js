@@ -5,20 +5,20 @@ const FaltasDTO = require('../dto/faltas_dto')
 const authMiddleware = require('../middleware/auth')
 route.use(authMiddleware)
 
-route.post('/', async (req, res) => {
-  helper.createAndRespond(res, model, FaltasDTO(req.body))
+route.post('/', async (req, res, next) => {
+  helper.createAndRespond(res, next, model, FaltasDTO(req.body))
 })
 
-route.delete('/:id', async (req, res) => {
-  helper.deleteAndRespond(res, model, {
+route.delete('/:id', async (req, res, next) => {
+  helper.deleteAndRespond(res, next, model, {
     where: {
       id: req.params.id
     }
   })
 })
 
-route.get('/:idmateria', async (req, res) => {
-  helper.findAllAndRespond(res, model, {
+route.get('/:idmateria', async (req, res, next) => {
+  helper.findAllAndRespond(res, next, model, {
     where: {
       idmateria: req.params.idmateria
     }

@@ -1,30 +1,30 @@
 module.exports = {
 
-  findAllAndRespond: async function findAllAndRespond (res, _model, filter) {
+  findAllAndRespond: async function findAllAndRespond (res, next, _model, filter) {
     try {
       const results = await _model.findAll(filter)
       res.status(200).send(results)
     } catch (error) {
-      res.status(400).send({ error: error })
+      next(error)
     }
   },
-  findByPkAndRespond: async function findByPkAndRespond (res, _model, id) {
+  findByPkAndRespond: async function findByPkAndRespond (res, next, _model, id) {
     try {
       const results = await _model.findByPk(id)
       res.status(200).send(results)
     } catch (error) {
-      res.status(400).send({ error: error })
+      next(error)
     }
   },
-  deleteAndRespond: async function deleteAndRespond (res, _model, filter) {
+  deleteAndRespond: async function deleteAndRespond (res, next, _model, filter) {
     try {
       _model.destroy(filter)
       res.status(200).send()
     } catch (error) {
-      res.status(400).send({ error: error })
+      next(error)
     }
   },
-  createAndRespond: async function createAndRespond (res, _model, data) {
+  createAndRespond: async function createAndRespond (res, next, _model, data) {
     try {
       const result = await _model.create(data)
       res.status(200).send({
@@ -32,10 +32,10 @@ module.exports = {
         timestamp: result.createdAt
       })
     } catch (error) {
-      res.status(400).send({ error: error })
+      next(error)
     }
   },
-  putAndRespond: async function putAndRespond (res, model, id, data, whereArgs) {
+  putAndRespond: async function putAndRespond (res, next, model, id, data, whereArgs) {
     try {
       await model.update(data, whereArgs)
 
@@ -46,9 +46,7 @@ module.exports = {
         timestamp: result.updatedAt
       })
     } catch (error) {
-      res.status(400).send({
-        error: error
-      })
+      next(error)
     }
   }
 }
