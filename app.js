@@ -27,7 +27,10 @@ app.use('/aulas', routeAulas)
 app.use('/auth', routeUsuarios)
 
 app.use((err, req, res, next) => {
-  res.status(400).send({ error: err.message })
+  if (err.code === 404) {
+    res.status(404).send({ error: 'Page Not Found' })
+  }
+  res.status(err.code | 400).send({ error: err.message })
 })
 
 module.exports = app

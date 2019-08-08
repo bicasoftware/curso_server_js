@@ -1,6 +1,6 @@
 module.exports = function FaltaDTO (body) {
   return {
-    idmateria: body.idmateria,
+    materiaId: body.materiaId,
     data: body.data,
     ordemAula: body.ordemAula
   }

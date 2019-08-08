@@ -48,5 +48,10 @@ module.exports = {
     } catch (error) {
       next(error)
     }
+  },
+  moveNext: function moveNext (next, code, message) {
+    const err = Error(message)
+    err.code = code
+    next(err)
   }
 }

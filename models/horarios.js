@@ -22,9 +22,6 @@ module.exports = function (sequelize, DataType) {
   horarios.associate = (models) => {
     horarios.belongsTo(
       models.periodos, {
-        through: 'idperiodo',
-        as: 'id_periodo',
-        foreignKey: 'idperiodo',
         onDelete: 'CASCADE',
         hierarchy: true
       }

@@ -30,10 +30,61 @@ var server = http.createServer(app)
 // server.on('listening', onListening)
 
 var models = require('../models')
-models.sequelize.sync().then(function () {
+models.sequelize.sync().then(async function () {
   server.listen(port)
   server.on('error', onError)
   server.on('listening', onListening)
+
+  if (await models.periodos.count() === 0) {
+    const periodo = await models.periodos.create({
+      presObrig: 70,
+      aulasdia: 4,
+      numperiodo: 1,
+      inicio: '2019-06-12',
+      termino: '2019-06-12',
+      medaprov: 7.5
+    })
+
+    for (let i = 0; i < 4; i++) {
+      await models.horarios.create({
+        periodoId: periodo.id,
+        ordemaula: i,
+        inicio: '18:00',
+        termino: '18:50'
+      })
+    }
+
+    const materia = await models.materias.create({
+      cor: 'F4F4F4',
+      nome: 'Matemática',
+      sigla: 'MAT',
+      freq: 1,
+      medaprov: periodo.medaprov,
+      periodoId: periodo.id
+    })
+
+    for (let i = 0; i < 4; i++) {
+      await models.aulas.create({
+        materiaId: materia.id,
+        weekday: 1,
+        ordem: i
+      })
+    }
+
+    await models.notas.create({
+      materiaId: materia.id,
+      data: '2019-08-12',
+      nota: 0.0
+    })
+
+    for (let i = 0; i < 4; i++) {
+      models.faltas.create({
+        materiaId: materia.id,
+        data: '2019-09-14',
+        ordemAula: i
+      })
+    }
+  }
 })
 
 /**

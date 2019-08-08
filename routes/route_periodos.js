@@ -6,7 +6,30 @@ const authMid = require('../middleware/auth')
 route.use(authMid)
 
 route.get('/', async (req, res, next) => {
-  helper.findAllAndRespond(res, next, models.periodos)
+  helper.findAllAndRespond(
+    res, next, models.periodos, {
+      include: [
+        {
+          model: models.horarios,
+          hierarchy: true
+        },
+        {
+          model: models.materias,
+          as: 'materias',
+          hierarchy: true,
+          include: [{
+            model: models.faltas,
+            hierarchy: true
+          }, {
+            model: models.aulas,
+            hierarchy: true
+          }, {
+            model: models.notas,
+            hierarchy: true
+          }]
+        }]
+    }
+  )
 })
 
 route.get('/:id', async (req, res, next) => {

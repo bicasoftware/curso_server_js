@@ -12,19 +12,21 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       validate: {
         max: 10.0,
-        min: 0.0,
-        inNumeric: true
+        min: 0.0
       }
     }
+  }, {
+    tablename: 'notas',
+    freezeTableName: true,
+    timestamps: true,
+    hierarchy: true
   })
 
   notas.associate = (models) => {
     notas.belongsTo(
       models.materias, {
-        through: 'idmateria',
-        as: 'id_materia',
-        foreignKey: 'idmateria',
-        hierarchy: true
+        hierarchy: true,
+        onDelete: 'CASCADE'
       }
     )
   }

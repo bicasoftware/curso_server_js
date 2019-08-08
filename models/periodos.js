@@ -36,9 +36,9 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       validate: {
-        len: [1],
-        min: 0,
-        max: 1
+        len: [2],
+        min: 50,
+        max: 100
       }
     },
     medaprov: {

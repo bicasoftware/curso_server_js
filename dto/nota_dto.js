@@ -1,6 +1,6 @@
 module.exports = function NotaDTO (body) {
   return {
-    idmateria: body.idmateria,
+    materiaId: body.materiaId,
     data: body.data,
     nota: body.nota
   }

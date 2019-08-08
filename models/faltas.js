@@ -16,14 +16,16 @@ module.exports = function (sequelize, DataTypes) {
         len: [0, 12]
       }
     }
+  }, {
+    tablename: 'faltas',
+    freezeTableName: true,
+    timestamps: true,
+    hierarchy: true
   })
 
   faltas.associate = (models) => {
     faltas.belongsTo(
       models.materias, {
-        through: 'idmateria',
-        as: 'id_materia',
-        foreignKey: 'idmateria',
         onDelete: 'CASCADE',
         hierarchy: true
       }

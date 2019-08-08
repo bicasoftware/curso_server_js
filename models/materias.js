@@ -2,10 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   var materias = sequelize.define('materias', {
     cor: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true
-      }
+      allowNull: false
     },
     nome: {
       type: DataTypes.STRING,
@@ -40,13 +37,16 @@ module.exports = function (sequelize, DataTypes) {
         isNumeric: true
       }
     }
+  }, {
+    tablename: 'materias',
+    freezeTableName: true,
+    timestamps: true,
+    hierarchy: true
   })
 
   materias.associate = (models) => {
     materias.belongsTo(
       models.periodos, {
-        through: 'idperiodo',
-        foreignKey: 'idperiodo',
         onDelete: 'CASCADE',
         hierarchy: true
       }

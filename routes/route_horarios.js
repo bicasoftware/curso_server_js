@@ -20,7 +20,7 @@ route.delete('/:id', async (req, res, next) => {
 route.get('/:idperiodo', async (req, res, next) => {
   helper.findAllAndRespond(res, next, model, {
     where: {
-      idperiodo: req.params.idperiodo
+      periodoId: req.params.idperiodo
     }
   })
 })

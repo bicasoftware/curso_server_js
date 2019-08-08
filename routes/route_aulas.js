@@ -8,7 +8,7 @@ route.use(authMid)
 route.get('/:idmateria', async (req, res, next) => {
   helper.findAllAndRespond(res, next, model, {
     where: {
-      idmateria: req.params.idmateria
+      materiaId: req.params.idmateria
     }
   })
 })
@@ -36,7 +36,7 @@ route.put('/', async (req, res, next) => {
   helper.putAndRespond(res, next, model, id, {
     weekday: weekday,
     ordem: ordem,
-    idmateria: idmateria
+    materiaId: idmateria
   }, {
     where: {
       id: id

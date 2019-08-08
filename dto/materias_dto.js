@@ -5,6 +5,6 @@ module.exports = function MateriasDTO (body) {
     sigla: body.sigla,
     freq: body.freq,
     medaprov: body.medaprov,
-    idperiodo: body.idperiodo
+    periodoId: body.periodoId
   }
 }

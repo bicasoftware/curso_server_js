@@ -1,28 +1,47 @@
 const route = require('express').Router()
-const model = require('../models').usuarios
+const models = require('../models')
 const auth = require('../utils/auth_helper')
+const moveNext = require('../utils/route_helper').moveNext
 
-route.post('/signin', async (req, res) => {
+async function getData () {
+  const periodos = await models.periodos.findAll({
+    include: [
+      {
+        model: models.horarios
+      },
+      {
+        model: models.materias,
+        include: [
+          { model: models.aulas },
+          { model: models.faltas },
+          { model: models.notas }
+        ]
+      }
+    ]
+  })
+
+  return periodos
+}
+
+route.post('/signin', async (req, res, next) => {
   const {
     email,
     password
   } = req.body
 
   try {
-    const count = await model.count({
+    const count = await models.usuarios.count({
       where: {
         email: email
       }
     })
 
     if (count > 0) {
-      res.status(500).send({
-        error: 'Email já cadastrado'
-      })
+      moveNext(next, 500, 'Email já cadastrado')
     } else {
       const hash = await auth.genHash(password)
 
-      const user = await model.create({
+      const user = await models.usuarios.create({
         email: email,
         password: hash
       })
@@ -35,40 +54,36 @@ route.post('/signin', async (req, res) => {
       })
     }
   } catch (error) {
-
+    moveNext(next, 401, error.message)
   }
 })
 
-route.post('/login', async (req, res) => {
+route.post('/login', async (req, res, next) => {
   const {
     email,
     password
   } = req.body
 
   try {
-    const user = await model.findOne({
+    const user = await models.usuarios.findOne({
       where: {
         email: email
       }
     })
     if (!user) {
-      res.status(400).send({
-        error: 'Email não cadastrado'
-      })
+      moveNext(next, 400, 'Email não cadastrado')
     } else if (!await auth.compareHash(password, user.password)) {
-      res.status(400).send({
-        error: 'Senha inválida'
-      })
+      moveNext(next, 400, 'Senha inválida')
     } else {
       const token = await auth.genToken({ id: user.id })
-
       res.status(200).send({
         email: user.email,
+        data: await getData(),
         token: token
       })
     }
   } catch (error) {
-    res.status(401).send({ error: error.message })
+    next(error)
   }
 })
 
