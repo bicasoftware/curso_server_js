@@ -15,6 +15,13 @@ module.exports = function (sequelize, DataTypes) {
         notEmpty: true
       }
     }
+  }, {
+    indexes: [
+      {
+        unique: true,
+        fields: ['email']
+      }
+    ]
   })
 
   return usuarios

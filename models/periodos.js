@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       validate: {
-        len: [2],
+        len: [2, 3],
         min: 50,
         max: 100
       }

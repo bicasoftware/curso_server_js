@@ -7,7 +7,7 @@ route.use(authMid)
 
 route.get('/:idperiodo', async (req, res, next) => {
   try {
-    const materia = await models.materias.findAll({
+    const materias = await models.materias.findAll({
       where: {
         periodoId: req.params.idperiodo
       },
@@ -23,7 +23,7 @@ route.get('/:idperiodo', async (req, res, next) => {
       }]
     })
 
-    res.status(200).send(materia)
+    res.status(200).send({ materias: materias })
   } catch (error) {
     next(error)
   }
@@ -39,6 +39,18 @@ route.delete('/:id', async (req, res, next) => {
 
 route.post('/', async (req, res, next) => {
   await routeHelper.createAndRespond(res, next, models.materias, MateriasDTO(req.body))
+})
+
+route.post('/many', async (req, res, next) => {
+  try {
+    const materias = req.body.materias.map(async (m) => {
+      m.periodoId = req.body.periodoId
+      return models.materias.create(m)
+    })
+    res.status(200).send({ materias: await Promise.all(materias) })
+  } catch (error) {
+    routeHelper.moveNext(next, 400, error)
+  }
 })
 
 module.exports = route

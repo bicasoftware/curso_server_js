@@ -1,32 +1,32 @@
 module.exports = {
 
-  findAllAndRespond: async function findAllAndRespond (res, next, _model, filter) {
+  findAllAndRespond: async function findAllAndRespond (res, next, model, filter) {
     try {
-      const results = await _model.findAll(filter)
+      const results = await model.findAll(filter)
       res.status(200).send(results)
     } catch (error) {
       next(error)
     }
   },
-  findByPkAndRespond: async function findByPkAndRespond (res, next, _model, id) {
+  findByPkAndRespond: async function findByPkAndRespond (res, next, model, id) {
     try {
-      const results = await _model.findByPk(id)
+      const results = await model.findByPk(id)
       res.status(200).send(results)
     } catch (error) {
       next(error)
     }
   },
-  deleteAndRespond: async function deleteAndRespond (res, next, _model, filter) {
+  deleteAndRespond: async function deleteAndRespond (res, next, model, filter) {
     try {
-      _model.destroy(filter)
-      res.status(200).send()
+      const result = await model.destroy(filter)
+      res.status(200).send({ removed: result === 1 })
     } catch (error) {
       next(error)
     }
   },
-  createAndRespond: async function createAndRespond (res, next, _model, data) {
+  createAndRespond: async function createAndRespond (res, next, model, data) {
     try {
-      const result = await _model.create(data)
+      const result = await model.create(data)
       res.status(200).send({
         id: result.id,
         timestamp: result.createdAt
