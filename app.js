@@ -18,6 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(parser.json())
 
+app.use('/', require('./routes/index_route'))
 app.use('/notas', routeNotas)
 app.use('/faltas', routeFaltas)
 app.use('/horarios', routeHorarios)
