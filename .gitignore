@@ -93,3 +93,5 @@ config/authconfig.json
 
 # db folder
 /db
+package-lock.json
+yarn.lock
