@@ -1,6 +1,6 @@
 {
   "development": {
-    "storage": "/home/saulo/curso.sqlite",
+    "storage": "./db/curso.sqlite",
     "dialect": "sqlite"
   },
   "test": {
