@@ -78,7 +78,7 @@ route.post('/login', async (req, res, next) => {
       const token = await auth.genToken({ id: user.id })
       res.status(200).send({
         email: user.email,
-        data: await getData(),
+        data: { periodos: await getData() },
         token: token
       })
     }
