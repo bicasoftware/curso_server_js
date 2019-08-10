@@ -89,7 +89,6 @@ typings/
 
 # KDE .directory
 *.directory
-config/authconfig.json
 
 # db folder
 /db
