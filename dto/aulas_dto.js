@@ -1,6 +1,6 @@
 module.exports = function AulasDTO (body) {
   return {
-    materiaId: body.materiaId,
+    materiaId: body.idmateria,
     weekday: body.weekday,
     ordem: body.ordem
   }

@@ -1,7 +1,10 @@
 {
-  "development": {
-    "storage": "./db/curso.sqlite",
-    "dialect": "sqlite",
+  "production": {
+    "username": "yuoofldotqbyxp",
+    "password": "509a0739c32ad405c57b36d2a288a6c289c247db8d20cc55d5dc21bb7751fa48",
+    "database": "database_production",
+    "host": "ec2-107-20-251-130.compute-1.amazonaws.com",
+    "dialect": "postgres",
     "pool": {
       "max": 5,
       "min": 0,
@@ -9,18 +12,17 @@
       "idle": 10000
     }
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+  "development": {
+    "database": "curso",
+    "username": "master",
+    "password": "master",
+    "host": "localhost",
+    "dialect": "postgres",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
   }
 }

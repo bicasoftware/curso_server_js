@@ -1,7 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
   var materias = sequelize.define('materias', {
     cor: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     nome: {
