@@ -2,7 +2,7 @@
   "production": {
     "username": "yuoofldotqbyxp",
     "password": "509a0739c32ad405c57b36d2a288a6c289c247db8d20cc55d5dc21bb7751fa48",
-    "database": "database_production",
+    "database": "d6l75qom5ve9rh",
     "host": "ec2-107-20-251-130.compute-1.amazonaws.com",
     "dialect": "postgres",
     "pool": {
