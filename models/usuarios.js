@@ -24,5 +24,9 @@ module.exports = function (sequelize, DataTypes) {
     ]
   })
 
+  usuarios.associate = (models) => {
+    usuarios.hasMany(models.periodos)
+  }
+
   return usuarios
 }

@@ -29,20 +29,31 @@ var server = http.createServer(app)
 // server.on('error', onError)
 // server.on('listening', onListening)
 
-var models = require('../models')
+const models = require('../models')
+const genHash = require('../utils/auth_helper').genHash
+
 models.sequelize.sync().then(async function () {
   server.listen(port)
   server.on('error', onError)
   server.on('listening', onListening)
 
-  if (await models.periodos.count() === 0) {
+  const countUsers = await models.usuarios.count()
+  const countPeriodos = await models.periodos.count()
+
+  if (countUsers === 0 && countPeriodos === 0) {
+    const usuario = await models.usuarios.create({
+      email: 'email@test.com',
+      password: await genHash('97674691')
+    })
+
     const periodo = await models.periodos.create({
       presObrig: 70,
       aulasdia: 4,
       numperiodo: 1,
       inicio: '2019-06-12',
       termino: '2019-06-12',
-      medaprov: 7.5
+      medaprov: 7.5,
+      usuarioId: usuario.id
     })
 
     for (let i = 0; i < 4; i++) {

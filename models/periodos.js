@@ -55,6 +55,12 @@ module.exports = function (sequelize, DataTypes) {
   periodos.associate = (models) => {
     periodos.hasMany(models.materias)
     periodos.hasMany(models.horarios)
+    periodos.belongsTo(
+      models.usuarios, {
+        onDelete: 'CASCADE',
+        hierarchy: true
+      }
+    )
   }
 
   return periodos

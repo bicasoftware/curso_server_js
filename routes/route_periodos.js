@@ -5,39 +5,44 @@ const helper = require('../utils/route_helper')
 const authMid = require('../middleware/auth')
 route.use(authMid)
 
-const fullQuery = {
-  include: [
-    {
-      model: models.horarios,
-      hierarchy: true
+function defaultQuery (userId) {
+  return {
+    where: {
+      usuarioId: userId
     },
-    {
-      model: models.materias,
-      as: 'materias',
-      hierarchy: true,
-      include: [{
-        model: models.faltas,
+    include: [
+      {
+        model: models.horarios,
         hierarchy: true
-      }, {
-        model: models.aulas,
-        hierarchy: true
-      }, {
-        model: models.notas,
-        hierarchy: true
-      }]
-    }
-  ]
+      },
+      {
+        model: models.materias,
+        as: 'materias',
+        hierarchy: true,
+        include: [{
+          model: models.faltas,
+          hierarchy: true
+        }, {
+          model: models.aulas,
+          hierarchy: true
+        }, {
+          model: models.notas,
+          hierarchy: true
+        }]
+      }
+    ]
+  }
 }
 
 route.get('/', async (req, res, next) => {
   helper.findAllAndRespond(
-    res, next, models.periodos, fullQuery
+    res, next, models.periodos, defaultQuery(req.userId)
   )
 })
 
 route.get('/:id', async (req, res, next) => {
   helper.findAllAndRespond(
-    res, next, models.periodos, fullQuery
+    res, next, models.periodos, defaultQuery(req.userId)
   )
 })
 
@@ -51,7 +56,7 @@ route.delete('/:id', async (req, res, next) => {
 
 route.post('/', async (req, res, next) => {
   try {
-    var periodo = await models.periodos.create(PeriodosDTO(req.body))
+    var periodo = await models.periodos.create(PeriodosDTO(req.body, req.userId))
 
     const horarios = req.body.horarios.map(async (h) => {
       h.periodoId = periodo.id
