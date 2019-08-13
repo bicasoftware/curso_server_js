@@ -72,4 +72,19 @@ route.post('/', async (req, res, next) => {
   }
 })
 
+route.put('/', async (req, res, next) => {
+  try {
+    helper.putAndRespond(
+      res,
+      next,
+      models.periodos,
+      req.body.oldId,
+      PeriodosDTO(req.body),
+      { where: { id: req.body.oldId } }
+    )
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = route

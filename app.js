@@ -10,6 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(parser.json())
 app.use(cors())
+app.use(require('compression')())
 
 app.use('/', require('./routes/index_route'))
 app.use('/notas', require('./routes/route_notas'))
@@ -21,10 +22,11 @@ app.use('/aulas', require('./routes/route_aulas'))
 app.use('/auth', require('./routes/route_usuarios'))
 
 app.use((err, req, res, next) => {
-  if (err.code === 404) {
-    res.status(404).send({ error: 'Page Not Found' })
-  }
   res.status(err.code | 400).send({ error: err.message })
+})
+
+app.get('*', (req, res) => {
+  res.status(404).send({ error: 'Route Not Found' })
 })
 
 module.exports = app
