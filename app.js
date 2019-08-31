@@ -1,9 +1,12 @@
 const logger = require('morgan')
+const path = require('path')
 const express = require('express')
 const parser = require('body-parser')
 const cors = require('cors')
 
 const app = express()
+
+app.use('/static', express.static('public'))
 
 app.use(logger('dev'))
 app.use(express.json())
@@ -26,7 +29,7 @@ app.use((err, req, res, next) => {
 })
 
 app.get('*', (req, res) => {
-  res.status(404).send({ error: 'Route Not Found' })
+  res.status(404).send({ error: 'Not Found' })
 })
 
 module.exports = app

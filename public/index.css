@@ -1,0 +1,39 @@
+body {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  background-color: #EEEEEE;
+  font-family: Roboto;
+}
+
+.login {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-rows: 30vh 30vh 30vh;
+  grid-template-areas:
+    ". . ."
+    "fields fields fields"
+    ". . .";
+  align-items: center;
+  align-self: center;
+}
+
+div.fields {
+  grid-area: fields;
+  padding: 32px;
+  display: flex;
+  flex-direction: row;
+}
+
+div.status {
+  align-self: center;
+  align-items: flex-end;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+h6.status {
+  color: #7cb342;
+  font-size: 20pt;
+}
