@@ -5,11 +5,9 @@ const helper = require('../utils/route_helper')
 const authMid = require('../middleware/auth')
 route.use(authMid)
 
-function defaultQuery (userId) {
+function defaultQuery(whereClause) {
   return {
-    where: {
-      usuarioId: userId
-    },
+    where: whereClause,
     include: [
       {
         model: models.horarios,
@@ -35,15 +33,21 @@ function defaultQuery (userId) {
 }
 
 route.get('/', async (req, res, next) => {
-  helper.findAllAndRespond(
-    res, next, models.periodos, defaultQuery(req.userId)
-  )
+  try {
+    const periodos = await models.periodos.findAll(defaultQuery({ usuarioId: req.userId }))
+    res.status(200).send({ periodos: periodos })
+  } catch (error) {
+    next(error)
+  }
 })
 
 route.get('/:id', async (req, res, next) => {
-  helper.findAllAndRespond(
-    res, next, models.periodos, defaultQuery(req.userId)
-  )
+  try {
+    const periodo = await models.periodos.findAll(defaultQuery({ usuarioId: req.userId, id: req.params.id }))
+    res.status(200).send({ periodo: periodo })
+  } catch (error) {
+    next(error)
+  }
 })
 
 route.delete('/:id', async (req, res, next) => {
