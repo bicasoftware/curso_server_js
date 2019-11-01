@@ -3,18 +3,30 @@ const models = require('../models')
 const auth = require('../utils/auth_helper')
 const moveNext = require('../utils/route_helper').moveNext
 
-async function getData () {
+async function getData() {
   const periodos = await models.periodos.findAll({
     include: [
       {
-        model: models.horarios
+        model: models.horarios,
+        hierarchy: true,
+        as: 'horarios'
       },
       {
         model: models.materias,
+        hierarchy: true,
         include: [
-          { model: models.aulas },
-          { model: models.faltas },
-          { model: models.notas }
+          {
+            model: models.aulas,
+            hierarchy: true
+          },
+          {
+            model: models.faltas,
+            hierarchy: true
+          },
+          {
+            model: models.notas,
+            hierarchy: true
+          }
         ]
       }
     ]
@@ -86,5 +98,38 @@ route.post('/login', async (req, res, next) => {
     next(error)
   }
 })
+
+route.delete('/unregister', async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    if (!email) {
+      moveNext(next, 400, "Email não cadastrado")
+    } else if (!password) {
+      moveNext(next, 400, "Senha não fornecida")
+    } else {
+      const usuario = await models.usuarios.findOne({
+        where: {
+          email: email
+        }
+      })
+
+      if (!usuario) {
+        moveNext(next, 400, "Email não encontrado")
+      } else if (!await auth.compareHash(password, usuario.password)) {
+        moveNext(next, 400, "Senha inválida")
+      } else {
+        await models.usuarios.destroy({
+          where: {
+            email: email
+          }
+        })
+
+        res.status(200).send({ "status": "ok" })
+      }
+    }
+  } catch (ex) {
+    moveNext(next, 400, "Falha ao descadastrar")
+  }
+});
 
 module.exports = route
