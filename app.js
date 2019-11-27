@@ -23,6 +23,7 @@ app.use('/materias', require('./routes/route_materias'))
 app.use('/periodos', require('./routes/route_periodos'))
 app.use('/aulas', require('./routes/route_aulas'))
 app.use('/auth', require('./routes/route_usuarios'))
+app.use('/configs', require('./routes/route_configurations'))
 
 app.use((err, req, res, next) => {
   res.status(err.code | 400).send({ error: err.message })

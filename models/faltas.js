@@ -26,10 +26,9 @@ module.exports = function (sequelize, DataTypes) {
   faltas.associate = (models) => {
     faltas.belongsTo(
       models.materias, {
-        onDelete: 'CASCADE',
-        hierarchy: true
-      }
-    )
+      onDelete: 'CASCADE',
+      hierarchy: true
+    })
   }
 
   return faltas

@@ -91,6 +91,11 @@ route.post('/login', async (req, res, next) => {
       res.status(200).send({
         email: user.email,
         data: { periodos: await getData() },
+        configurations: await models.configurations.findOne({
+          where: {
+            usuarioId: user.id
+          }
+        }),
         token: token
       })
     }
@@ -99,7 +104,7 @@ route.post('/login', async (req, res, next) => {
   }
 })
 
-route.delete('/unregister', async (req, res, next) => {
+route.post('/unregister', async (req, res, next) => {
   const { email, password } = req.body;
   try {
     if (!email) {
