@@ -43,7 +43,7 @@ router.post('/', async (req, res, next) => {
       } 
     )
 
-    config = models.configurations.findOne(
+    config = await models.configurations.findOne(
       {
         where: {
           usuarioId: req.userId
