@@ -2,9 +2,20 @@ const route = require('express').Router()
 const models = require('../models')
 const auth = require('../utils/auth_helper')
 const moveNext = require('../utils/route_helper').moveNext
+const usuarioService = require('../services/usuarios_service')
+const configurationsService = require('../services/configurations_service')
 
-async function getData() {
+//Corrigir:
+//Ao tentar um signin, gera erro:
+/* {
+  "error": "body is not defined"
+} */
+
+async function getData(userId) {
   const periodos = await models.periodos.findAll({
+    where: {
+      usuarioId: userId
+    },
     include: [
       {
         model: models.horarios,
@@ -52,17 +63,15 @@ route.post('/signin', async (req, res, next) => {
       moveNext(next, 500, 'Email já cadastrado')
     } else {
       const hash = await auth.genHash(password)
-
-      const user = await models.usuarios.create({
-        email: email,
-        password: hash
-      })
+      const user = await usuarioService.addUser(hash, email)
+      const configurations = await configurationsService.initConfig(user.id)
+      const token = await auth.genToken({ id: user.id })
 
       res.status(200).send({
-        email: email,
-        token: await auth.genToken({
-          id: user.id
-        })
+        email: user.email,
+        data: { periodos: await getData(user.id) },
+        configurations: configurations,
+        token: token
       })
     }
   } catch (error) {
@@ -90,12 +99,8 @@ route.post('/login', async (req, res, next) => {
       const token = await auth.genToken({ id: user.id })
       res.status(200).send({
         email: user.email,
-        data: { periodos: await getData() },
-        configurations: await models.configurations.findOne({
-          where: {
-            usuarioId: user.id
-          }
-        }),
+        data: { periodos: await getData(user.id) },
+        configurations: await configurationsService.findConfig(user.id),
         token: token
       })
     }
